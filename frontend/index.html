@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic-Tac-Toe</title>
+  <style>
+    /* Reset básico */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: #fafafa;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      color: #333;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #444;
+    }
+
+    #newGameBtn {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      background: #6c63ff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #newGameBtn:hover {
+      background: #5952cc;
+    }
+
+    #matchId {
+      margin: 1rem 0;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 8px;
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e0e0e0;
+      border-radius: 8px;
+      font-size: 2.5rem;
+      color: #333;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cell:hover {
+      background: #d5d5d5;
+    }
+    .cell.disabled {
+      cursor: default;
+      background: #ccc;
+    }
+
+    #status {
+      margin-top: 1.5rem;
+      font-size: 1.4rem;
+    }
+
+    /* Emoticonos de estado */
+    .turno::before {
+      content: "😊 ";
+    }
+    .win::before {
+      content: "🎉 ";
+    }
+    .draw::before {
+      content: "🤝 ";
+    }
+  </style>
+</head>
+<body>
+  <h1>Tic-Tac-Toe</h1>
+  <button id="newGameBtn">Nueva Partida</button>
+  <div id="matchId"></div>
+  <div id="board" class="board"></div>
+  <div id="status"></div>
+
+  <script>
+    const apiUrl = "";  // al estar servidos en la misma URL
+    let matchId = "";
+    let nextPlayer = "";
+    let status = "";
+
+    const newGameBtn = document.getElementById("newGameBtn");
+    const matchIdDiv = document.getElementById("matchId");
+    const boardDiv   = document.getElementById("board");
+    const statusDiv  = document.getElementById("status");
+
+    newGameBtn.addEventListener("click", async () => {
+      try {
+        const res  = await fetch(`${apiUrl}/create`, { method: "POST" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        matchId = data.matchId;
+        matchIdDiv.textContent = `Match ID: ${matchId}`;
+        await loadStatus();
+      } catch (e) {
+        alert(`Error al crear partida: ${e.message}`);
+      }
+    });
+
+    async function loadStatus() {
+      try {
+        const res  = await fetch(`${apiUrl}/status?matchId=${matchId}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        renderBoard(data.board);
+        nextPlayer = data.next_player;
+        status     = data.status;
+        statusDiv.className = "";
+        if (status === "IN_PROGRESS") {
+          statusDiv.classList.add('turno');
+          statusDiv.textContent = `Turno de ${nextPlayer}`;
+        } else if (status === "DRAW") {
+          statusDiv.classList.add('draw');
+          statusDiv.textContent = "EMPATE";
+        } else {
+          statusDiv.classList.add('win');
+          statusDiv.textContent = status.replace(/_/g, ' ');
+        }
+      } catch (e) {
+        alert(`Error al obtener estado: ${e.message}`);
+      }
+    }
+
+    function renderBoard(board) {
+      boardDiv.innerHTML = "";
+      for (let y = 0; y < 3; y++) {
+        for (let x = 0; x < 3; x++) {
+          const cell = document.createElement("div");
+          const val  = board[y][x] || "";
+          cell.className = "cell" + (val ? " disabled" : "");
+          cell.textContent = val;
+          cell.addEventListener("click", () => {
+            if (!val) makeMove(x + 1, y + 1);
+          });
+          boardDiv.appendChild(cell);
+        }
+      }
+    }
+
+    async function makeMove(x, y) {
+      if (!matchId || status !== "IN_PROGRESS") return;
+      try {
+        const res = await fetch(`${apiUrl}/move`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            matchId:  matchId,
+            playerId: nextPlayer,
+            square:   { x, y }
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Movimiento inválido: ${err.detail}`);
+          return;
+        }
+        await loadStatus();
+      } catch (e) {
+        alert(`Error al mover: ${e.message}`);
+      }
+    }
+  </script>
+</body>
+</html>

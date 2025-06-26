@@ -42,9 +42,9 @@ Servicio web de Tic-Tac-Toe implementado con FastAPI, SQLAlchemy y PostgreSQL.
 
    python -m venv venv
 
-   # Linux -> source venv/bin/actívate
+   **Linux** -> source venv/bin/actívate
 
-   # Windows -> .env\Scripts\Activate.ps1
+   **Windows** -> .env\Scripts\Activate.ps1
 
 2. **Instala dependencias**  
 

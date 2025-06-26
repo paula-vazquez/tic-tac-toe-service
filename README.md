@@ -32,17 +32,15 @@ Servicio web de Tic-Tac-Toe implementado con FastAPI, SQLAlchemy y PostgreSQL.
 3. **Crea y activa un entorno virtual**  
 
    python -m venv venv
-   **Linux / macOS**
-   source venv/bin/activate
-   **Windows PowerShell**
-   .\venv\Scripts\Activate.ps1
+   
+   **Linux / macOS** -> source venv/bin/activate ó **Windows PowerShell** -> .\venv\Scripts\Activate.ps1
 
-4. **Instala dependencias**  
+5. **Instala dependencias**  
 
    pip install --upgrade pip
    pip install -r requirements.txt
 
-5. **Configura variables de entorno**  
+6. **Configura variables de entorno**  
    En la raíz crea un fichero `.env` con al menos:
 
    DB_URL=postgresql://postgres:postgres@localhost:5432/tictactoe

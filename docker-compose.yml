@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tictactoe
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      DB_URL: "postgresql://postgres:postgres@db:5432/tictactoe"
+      SECRET_KEY: "EstaEsUnaClaveMuySecreta123!"
+    volumes:
+      - .:/app
+
+volumes:
+  db_data:

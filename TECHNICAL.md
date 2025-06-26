@@ -24,7 +24,7 @@
 - **Capa Framework (FastAPI)**  
   - **`src/main.py`** expone los endpoints HTTP y convierte peticiones a casos de uso.  
   - **Schemas Pydantic** (`schemas.py`) validan y serializan la entrada/salida.  
-  - **Beneficio**: El framework sólo convive en esta capa; el núcleo de la app no depende de FastAPI.
+  - **Beneficio**: El framework solo convive en esta capa; el núcleo de la app no depende de FastAPI.
 
 
 ## Twelve-Factor App
@@ -61,12 +61,10 @@ Aplicando buenas prácticas de [12-Factor](https://12factor.net):
 - **Por qué lo hice**  
   - **Visibilidad de resultado**: Un API sin UI es menos tangible. El pequeño SPA permite comprobar la lógica en tiempo real.  
   - **Completar el flujo**: Mostrar creación de partida, movimientos y estados finales sin usar `curl` o Postman.  
-  - **Aprendizaje full-stack**: Demuestra capacidad para conectar FastAPI con JavaScript “vanilla” y estilo CSS moderno.
 
 - **Qué me gusta del enfoque**  
   - **Simplicidad**: Solo HTML/CSS/JS, cero frameworks adicionales, fácil de entender y extender.  
   - **Flexibilidad**: Permite evolucionar a React/Vue cuando la app necesite real-time o más interacción.  
   - **UX básica**: Interfaz centrada, colores suaves y emojis que aportan un toque humano y “feedback” inmediato al usuario.
-
 
 > Con esta documentación separada capturo no solo **qué** hice, sino **por qué**: las decisiones están alineadas con buenas prácticas de arquitectura, configuración y usabilidad.

@@ -26,9 +26,10 @@ Servicio web de Tic-Tac-Toe implementado con FastAPI, SQLAlchemy y PostgreSQL.
 1. **Clona el repositorio**  
 
    git clone <https://github.com/paula-vazquez/tic-tac-toe-service.git>
+   
    cd tic-tac-toe-service
 
-2. **Crea y activa un entorno virtual**  
+3. **Crea y activa un entorno virtual**  
 
    python -m venv venv
    # Linux / macOS
@@ -36,12 +37,12 @@ Servicio web de Tic-Tac-Toe implementado con FastAPI, SQLAlchemy y PostgreSQL.
    # Windows PowerShell
    .\venv\Scripts\Activate.ps1
 
-3. **Instala dependencias**  
+4. **Instala dependencias**  
 
    pip install --upgrade pip
    pip install -r requirements.txt
 
-4. **Configura variables de entorno**  
+5. **Configura variables de entorno**  
    En la raíz crea un fichero `.env` con al menos:
 
    DB_URL=postgresql://postgres:postgres@localhost:5432/tictactoe

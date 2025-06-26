@@ -20,6 +20,8 @@ services:
     environment:
       DB_URL: "postgresql://postgres:postgres@db:5432/tictactoe"
       SECRET_KEY: "EstaEsUnaClaveMuySecreta123!"
+    volumes:
+      - .:/app
 
 volumes:
   db_data:

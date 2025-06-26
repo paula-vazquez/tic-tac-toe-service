@@ -32,9 +32,9 @@ Servicio web de Tic-Tac-Toe implementado con FastAPI, SQLAlchemy y PostgreSQL.
 3. **Crea y activa un entorno virtual**  
 
    python -m venv venv
-   # Linux / macOS
+   **Linux / macOS**
    source venv/bin/activate
-   # Windows PowerShell
+   **Windows PowerShell**
    .\venv\Scripts\Activate.ps1
 
 4. **Instala dependencias**  
@@ -46,6 +46,7 @@ Servicio web de Tic-Tac-Toe implementado con FastAPI, SQLAlchemy y PostgreSQL.
    En la raíz crea un fichero `.env` con al menos:
 
    DB_URL=postgresql://postgres:postgres@localhost:5432/tictactoe
+   
    SECRET_KEY=UnaCadenaMuySecretaDeAlMenos32Caracteres
 
 ## Migraciones
@@ -70,7 +71,7 @@ uvicorn main:app --reload --app-dir src --host 127.0.0.1 --port 8000
 
 curl -X POST http://127.0.0.1:8000/create
 
-**Respuesta**  
+**Respuesta de ejemplo**  
 
 { "matchId": "e2f1c3a4-5678-90ab-cdef-1234567890ab" }
 
